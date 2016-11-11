@@ -20,4 +20,6 @@ Repository for all code to do with the project
 ##CURL Method
 
 1. FOR POST... curl -H "Content-Type: application/json" -X POST -d @todo.json http://127.0.0.1:5000/
-1. 
+2. FOR DELETE... curl -X DELETE http://127.0.0.1:5000/del/1
+3. FOR UPDATE... curl -H "Content-Type: application/json" -X PUT -d @todo.json http://127.0.0.1:5000/update/1
+4. FOR GET... curl -X GET http://127.0.0.1:5000/
