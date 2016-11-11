@@ -12,3 +12,12 @@ Repository for all code to do with the project
 3. Added POST method where user can add information in the database using curl.
 
 ##Bottle
+
+
+
+
+
+##CURL Method
+
+1. FOR POST... curl -H "Content-Type": application/json" -X POST -d @todo.json http://127.0.0.1:5000/
+1. 
