@@ -4,7 +4,8 @@ Repository for all code to do with the project
 1. The Bottle folder has code which Kevin has developed.
 2. The Flask folder has code which Mubasher has developed.
 
-
+##SQL Statement
+1. sqlite> select todo.todo_ID, todo.UserID, User.FirstName, todo.details from todo, User where todo.UserID = User.User_ID;
 ##Flask
 
 1. Added the code with database information
