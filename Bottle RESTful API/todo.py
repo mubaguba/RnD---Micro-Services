@@ -1,7 +1,7 @@
 import sqlite3
 from bottle import route, run, debug
 from bottle import redirect, request, template
-#----------------------------------------------------------------------
+
 @route('/edit/:no', method='GET')
 
 def edit_item(no):
@@ -28,7 +28,7 @@ def edit_item(no):
         
         return template('edit_task', old=cur_data, no=no)
     
-#----------------------------------------------------------------------
+
 @route('/item:item#[0-9]+#')
 def show_item(item):
     conn = sqlite3.connect('todo.db')
@@ -41,7 +41,7 @@ def show_item(item):
     else:
         return 'Task: %s' %result[0]
     
-#----------------------------------------------------------------------
+
 @route("/done")
 def show_done():
     conn = sqlite3.connect('todo.db')
@@ -53,7 +53,7 @@ def show_done():
     output = template("show_done", rows=result)
     return output
     
-#----------------------------------------------------------------------
+
 @route("/")
 @route("/todo")
 def todo_list():
@@ -66,7 +66,7 @@ def todo_list():
     output = template("make_table", rows=result)
     return output
 
-#----------------------------------------------------------------------
+
 @route("/new", method="GET")
 def new_item():
     if request.GET.get("save", "").strip():
