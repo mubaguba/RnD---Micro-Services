@@ -1,4 +1,4 @@
-from flask import Flask, jsonify,json, request
+from flask import Flask, jsonify, json, request, render_template, abort
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -28,23 +28,31 @@ class Todo(db.Model, JsonModel):    #Class which is a model for the Todo table i
         self.UserID = UserID
         self.details = details
 
-@app.route('/', methods = ['GET'])   #Uses GET method to return all information in the database.
+@app.route('/todo', methods = ['GET'])   #Uses GET method to return all information in the database.
 def index():
-    return json.dumps([u.as_dict() for u in User.query.all()+Todo.query.all()])
+    return json.dumps([u.as_dict() for u in Todo.query.all()]), 201
 
-@app.route('/<int:todo_ID>', methods = ['GET'])
+@app.route('/todo/<int:todo_ID>', methods = ['GET'])
 def get(todo_ID):
-    query = db.execute("select * from Todo")
-    return {'todo': [dict(zip(tuple(query.keys()), i)) for i in query.cursor if i[1] == todo_ID]}
+    response={}
+    todo = Todo.query.get(todo_ID)
+    response['todo_ID']= todo.todo_ID
+    response['UserID'] = todo.UserID
+    response['details'] = todo.details
+    response['status_code'] = 201
+    return jsonify(response)
 
-@app.route('/', methods = ['POST'])  #Uses POST method with same URL as GET method to add new information to Todo table.
+@app.route('/todo', methods = ['POST'])  #Uses POST method with same URL as GET method to add new information to Todo table.
 def create_dev():
+    if not request.json:
+        abort(400)
     todo = Todo(UserID = request.json["UserID"],details = request.json["details"])
     db.session.add(todo)
     db.session.commit()
-    return  "It worked"
+    return "created", 201
 
-@app.route('/update/<int:todo_ID>', methods = ['PUT']) ##URL which updates what is related to the todo_ID
+
+@app.route('/todo/<int:todo_ID>', methods = ['PUT']) ##URL which updates what is related to the todo_ID
 def update_todo(todo_ID):
     dev = Todo.query.get(todo_ID) ##Gets the id so it is based off id.
     dev.UserID = request.json["UserID"]
@@ -53,12 +61,11 @@ def update_todo(todo_ID):
     db.session.commit()
     return "Updates todo"
 
-@app.route('/del/<int:todo_ID>', methods = ['DELETE']) ##URL which deletes whatever information is related to the todo_ID
+@app.route('/todo/<int:todo_ID>', methods = ['DELETE']) ##URL which deletes whatever information is related to the todo_ID
 def delete_dev(todo_ID):
     db.session.delete(Todo.query.get(todo_ID))
     db.session.commit() ##Commits to the database so it is deleted.
     return jsonify({'result': "deleted"}) ##Returns true if it works.
-
 
 @app.before_first_request #Creates everything before the first request.
 def startup():
