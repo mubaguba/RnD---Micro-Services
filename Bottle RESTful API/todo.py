@@ -67,7 +67,7 @@ def todo_list():
     return output
 
 
-@route("/new", method="GET")
+@route("/new", method="POST")
 def new_item():
     if request.GET.get("save", "").strip():
         new = request.GET.get("task", "").strip()
