@@ -1,12 +1,14 @@
 import sqlite3
-from bottle import route,run, request,get,post, delete
+from bottle import route,run, request,get,post, delete, error
 
-@route('/todo')
+@get('/')
 def todo_list():
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
     c.execute("SELECT * FROM User")
-    result = c.fetchall()
+    result = 'User Name: '+ c.fetchall()
+    c.execute("SELECT * FROM Todo")
+    result += c.fetchall()
     c.close()
     return str(result)
 
@@ -15,14 +17,28 @@ def getOne(id):
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
     c.execute("Select * from User where User_ID = (?)", (id))
-    result = "User Name: "+ c.fetchall()
+    result = 'User Name: '+ c.fetchall()
     c.execute("Select * from Todo where UserID = (?)", (id))
-    result += "Todo Detail: " + c.fetchall()
+    result += 'Todo Detail: ' + c.fetchall()
     c.close()
     return str(result)
-	
 
-#@route('/new', method = 'GET')
+@delete('/todo/delete/<id>')
+def removeOne(id):
+    conn = sqlite3.connect('todo.db')
+    c = conn.cursor()
+    c.execute("Delete From User where User_ID = (?)", (id))
+    result = c.fetchall()
+    return str(result)
+
+@error(403)
+def mistake403(code):
+    return 'There is a mistake in your url!'
+
+@error(404)
+def mistake404(code):
+    return 'Sorry, this page does not exist!'
+
 
 
 run(debug=True, reloader=True)
