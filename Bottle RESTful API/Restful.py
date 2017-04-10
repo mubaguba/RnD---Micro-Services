@@ -1,7 +1,7 @@
 import sqlite3
 from bottle import route,run, request,get,post, delete, error
 
-@get('/')
+@get('/todo')
 def todo_list():
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
@@ -17,9 +17,9 @@ def getOne(id):
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
     c.execute("Select * from User where User_ID = (?)", (id))
-    result = 'User Name: '+ c.fetchall()
+    result =  c.fetchall()
     c.execute("Select * from Todo where UserID = (?)", (id))
-    result += 'Todo Detail: ' + c.fetchall()
+    result +=  c.fetchall()
     c.close()
     return str(result)
 
