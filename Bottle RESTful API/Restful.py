@@ -6,7 +6,7 @@ def todo_list():
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
     c.execute("SELECT * FROM User")
-    result = 'User Name: '+ c.fetchall()
+    result = c.fetchall()
     c.execute("SELECT * FROM Todo")
     result += c.fetchall()
     c.close()
