@@ -27,7 +27,8 @@ def getOne(id):
 def removeOne(id):
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
-    c.execute("Delete From User where User_ID = (?)", (id))
+    c.execute("Delete from Todo where todo_ID = (?)", (id))
+    conn.commit()
     result = c.fetchall()
     return str(result)
 
