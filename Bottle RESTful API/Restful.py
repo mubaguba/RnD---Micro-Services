@@ -1,3 +1,4 @@
+import bottle
 import sqlite3
 from bottle import route,run, request,get,post, delete, error
 
@@ -40,6 +41,9 @@ def mistake403(code):
 def mistake404(code):
     return 'Sorry, this page does not exist!'
 
-
-
-run(debug=True, reloader=True)
+if __name__ == '__main__':
+	bottle.debug(True)
+	bottle.run(reloader= True)
+else:
+	application = bottle.default_app()
+	
