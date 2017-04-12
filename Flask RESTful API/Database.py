@@ -1,6 +1,6 @@
 import sqlite3
 #Connects to the list database so we can create tables and insert data.
-with sqlite3.connect('/home/muba/PycharmProjects/Work/Practise.db') as connection:
+with sqlite3.connect('/home/muba/PycharmProjects/Work/Practice.db') as connection:
     c = connection.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS User(User_ID INTEGER PRIMARY KEY,
     FirstName text, LastName text)""")
