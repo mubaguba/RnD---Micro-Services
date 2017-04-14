@@ -1,7 +1,10 @@
+import bottle
 import sqlite3
 from bottle import route,run, request,get,post, delete, error
 
-@get('/todo')
+application = bottle.Bottle()
+
+@application.route('/todo')
 def todo_list():
     conn = sqlite3.connect('Practice.db')
     c = conn.cursor()
@@ -13,7 +16,7 @@ def todo_list():
     c.close()
     return str(result)
 
-@get('/todo/<id>')
+@application.route('/todo/<id>')
 def getOne(id):
     conn = sqlite3.connect('Practice.db')
     c = conn.cursor()
@@ -25,7 +28,7 @@ def getOne(id):
     c.close()
     return str(result)
 
-@post('/animal')
+@application.route('/animal')
 def addOne():
     conn = sqlite3.connect('Practice.db')
     c = conn.cursor()
@@ -34,7 +37,7 @@ def addOne():
 	#return {'animals' : animals}
     return''
 
-@delete('/todo/delete/<id>')
+@application.route('/todo/delete/<id>')
 def removeOne(id):
     conn = sqlite3.connect('Practice.db')
     c = conn.cursor()
@@ -51,6 +54,6 @@ def mistake403(code):
 def mistake404(code):
     return 'Sorry, this page does not exist!'
 
+if __name__ == '__main__':
+    application.run()
 
-
-run(debug=True, reloader=True)
