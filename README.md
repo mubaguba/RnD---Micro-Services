@@ -14,6 +14,7 @@ Repository for all code to do with the project
 
 ##Bottle
 
+1. Added GET, DELETE.
 
 
 
@@ -24,3 +25,15 @@ Repository for all code to do with the project
 2. FOR DELETE... curl -X DELETE http://127.0.0.1:5000/todo/9
 3. FOR UPDATE... curl -H "Content-Type: application/json" -X PUT -d @todo.json http://127.0.0.1:5000/todo/10
 4. FOR GET... curl -X GET http://127.0.0.1:5000/todo/14
+
+##uWSGI
+
+1. Have made two .ini files which run each app individually.
+2. uwsgi me.ini
+3. uwsgi bottle.ini
+
+#uWSGI Emperor mode
+
+1. Both API's can run at the same time using Emperor mode.
+2. Made a vassals folder containing both configuration files for the API's(.ini)
+3. uwsgi --emperor vassals --uid http --gid http --master
