@@ -1,0 +1,51 @@
+Set the development environment
+sudo apt-get install python-setuptools python-dev build-essential
+sudo apt-get install python-pip
+sudo pip install --upgrade pip
+
+
+Install bottle
+sudo pip install bottle
+
+Install Flask and it's imports
+sudo apt-get update
+sudo pip install Flask
+sudo apt-get install python-flask-sqlalchemy
+
+To install uwsgi 
+pip install uwsgi
+
+
+Getting curl
+sudo apt-get update
+sudo apt-get install curl
+
+Steps to get uwsgi in emperor mode running both RESTful API at once
+- All the necessary code for the API's are stored in GitHub repository https://github.com/mubaguba/RnD---Micro-Services
+- Keep everything in one folder
+- Have your project folder, make sure it contains everything from the Flask RESTful API folder.
+- Copy the RESTful.py file from Bottle RESTful API and add it to the project folder (you don't need the other ones as they are already with the Flask files)
+- Create a vassals folder inside the project folder which will contain bottle.ini and Flask.ini
+- With all these steps followed, now go to the projects location using the terminal or any other tool.
+- now to get uwsgi in emperor mode to run both API's type in the terminal uwsgi --emperor vassals --uid http --gid http --master
+- This should run both API's at once, to make sure it works it will state that both config files (bottle.ini, me.ini) are ready to accept requests
+- Once this is completed, you can now use requests from both API's
+- to use requests for the Bottle API, the url is "0.0.0.0:5001/todo" and for Flask "0.0.0.0:5000/todo".
+- These two should output the data from the todo table.
+
+curl Statements
+- curl -X GET 0.0.0.0:5000/todo/14
+- curl -H "Content-Type: application/json" -X POST -d @todo.json 0.0.0.0:5000/todo
+- curl -H "Content-Type: application/json" -X PUT -d @todo.json 0.0.0.0:5000/todo/10
+- curl -X DELETE 0.0.0.0:5000/todo/9
+
+To use curl statements for Flask use 0.0.0.0:5001/todo
+
+
+
+
+
+
+
+
+
